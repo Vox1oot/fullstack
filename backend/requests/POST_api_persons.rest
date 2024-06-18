@@ -1,0 +1,26 @@
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Vitaliy Vladimirovic",
+  "number": "39-44-66666"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "number": "39-44-66666"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Vitaliy",
+  "number": ""
+}
