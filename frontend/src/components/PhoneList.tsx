@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPhoneNote } from './phoneList.interface';
+import { BASE_URL } from '../constants/api';
 
 export const PhoneList = () => {
   const [phones, setPhones] = useState<IPhoneNote[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/persons')
+    fetch(`${BASE_URL}/persons`)
       .then((response) => response.json())
       .then((data: IPhoneNote[]) => setPhones(data))
       .catch((error) => console.log(error));

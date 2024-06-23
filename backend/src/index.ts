@@ -13,6 +13,7 @@ const app = express();
 app.use(json());
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+app.use(express.static('dist'));
 
 app.get('/api/persons', (req: Request, res: Response) => {
   res.status(200).json(data);
@@ -66,9 +67,7 @@ app.post('/api/persons', (req: Request, res: Response) => {
 
 app.get('/api/info', (req: Request, res: Response) => {
   const length = data.length;
-  res
-    .status(200)
-    .send(`<p>Phonebok has info for ${length} persons</p></br>${new Date()}`);
+  res.status(200).send(`<p>Phonebok has info for ${length} persons</p></br>${new Date()}`);
 });
 
 const unknownEndpoint = (req: Request, res: Response) => {
