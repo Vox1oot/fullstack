@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IPhoneNote } from './phoneList.interface';
 import { BASE_URL } from '../constants/api';
+import styles from './PhoneList.module.css';
 
 export const PhoneList = () => {
   const [phones, setPhones] = useState<IPhoneNote[]>([]);
@@ -13,7 +14,7 @@ export const PhoneList = () => {
   }, []);
 
   return (
-    <ul>
+    <ul className={styles.phoneList}>
       {phones.map((phone) => (
         <li key={phone.id}>
           {phone.name} - {phone.number}
