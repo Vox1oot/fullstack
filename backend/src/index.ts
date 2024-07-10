@@ -2,6 +2,8 @@ import express, { Request, Response, json } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { data } from './db';
+import 'dotenv/config';
+import { Note } from './models/phonebook.model';
 
 const PORT = process.env.PORT || 3001;
 
@@ -68,6 +70,41 @@ app.post('/api/persons', (req: Request, res: Response) => {
 app.get('/api/info', (req: Request, res: Response) => {
   const length = data.length;
   res.status(200).send(`<p>Phonebok has info for ${length} persons</p></br>${new Date()}`);
+});
+
+app.get('/api/notes', async (req: Request, res: Response) => {
+  try {
+    const notes = await Note.find({});
+    res.json(notes);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.get('/api/notes/:id', async (req: Request, res: Response) => {
+  try {
+    const note = await Note.findById(req.params.id);
+    res.json(note);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.post('/api/notes', (req: Request, res: Response) => {
+  const { body } = req;
+
+  if (!body.name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+
+  if (!body.phone) {
+    return res.status(400).json({ error: 'Phone is required' });
+  }
+
+  const newNote = new Note(body);
+  newNote.save().then((savedNote) => {
+    res.json(savedNote);
+  });
 });
 
 const unknownEndpoint = (req: Request, res: Response) => {
